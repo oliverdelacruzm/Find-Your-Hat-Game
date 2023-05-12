@@ -17,10 +17,10 @@ class Field {
         for (let i = 0; i < array.length; i++) {
             for (let j = 0; j < array[i].length; j++) {
                 process.stdout.write(array[i][j]); // use stdout.write() to print without formatting
-            }
+            };
             process.stdout.write('\n'); // use stdout.write() to print a new line after each row
-        }
-    };
+        };
+    }
 
 
     updateField(move) {
@@ -31,7 +31,6 @@ class Field {
         let y = 0; 
         
         while (gameStatus !== 'w') {
-
             if (move === 'l') {
                 y -= 1; 
             } else if (move === 'r') {
@@ -53,31 +52,14 @@ class Field {
                 break;
             } else {
                 this.field[x][y] = pathCharacter;
-            }
+            };
 
             if (x === 2 && y === 1) {
                 gameStatus = 'w'; 
                 this.print();
                 process.stdout.write('\nYou win!\n');
                 break;
-            }
-
-            
-            // if (this.field[0][0] === pathCharacter) {
-            //     if (move === 'l' || move === 'u') {
-            //         gameStatus = 'g'; 
-            //         process.stdout.write('\nGame Over');
-            //         return;
-            //     } else if (move === 'r') {
-            //         this.field[0][1] = pathCharacter;
-            //         this.print();
-            //     }; 
-            // };
-
-            // if (gameStatus === 'w') {
-            //     process.stdout.write("\nYou have won the game!");
-            //     break;
-            // };
+            };
 
             this.print();
             move = prompt("Which way would you like to move?" + "\n(L = Left, R = Right, U = Up, D = Down): ");
@@ -156,6 +138,7 @@ newField.print();
 const move = prompt("Which way would you like to move?" + "\n(L = Left, R = Right, U = Up, D = Down): ").trim();
 newField.updateField(move);
 
+//after gameplay, use generateField static method
+//print out a 5x5 field with randomly placed holes representing up to 30% of the field 
 const otherField = new Field(Field.generateField(5, 5, 0.3));
 otherField.print();
-
