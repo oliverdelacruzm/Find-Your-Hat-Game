@@ -83,6 +83,64 @@ class Field {
             move = prompt("Which way would you like to move?" + "\n(L = Left, R = Right, U = Up, D = Down): ");
         };
     }
+
+    static generateField(height, width, holePercentage) {
+        if (height < 2 || width < 2) {
+            height = prompt("Enter new height greater than 1: ")
+            width = prompt("Enter new width greater than 1: ")
+        };
+        
+        let field = [];
+
+        //Create a field with only field characters
+        for (let i = 0; i < height; i++) {
+            field.push([]);
+            for (let j = 0; j < width; j++) {
+                field.push(fieldCharacter);
+            };
+        };
+
+        //Place at least one hat, one hole, and one pathCharacter in the field
+        let hatRow = Math.floor(Math.random() * height);
+        let hatCol = Math.floor(Math.random() * width);
+        field[hatRow][hatCol] = hat;
+
+        let holeRow = Math.floor(Math.random() * height);
+        let holeCol = Math.floor(Math.random() * width);
+        while (holeRow === hatRow && holeCol === hatCol) {
+            holeRow = Math.floor(Math.random() * height);
+            holeCol = Math.floor(Math.random() * width);
+        }
+        field[holeRow][holeCol] = hole;
+
+        let pathRow = Math.floor(Math.random() * height);
+        let pathCol = Math.floor(Math.random() * width);
+        while ((pathRow === hatRow && pathCol === hatCol) || (pathRow === holeRow && pathCol === holeCol) ) {
+            holeRow = Math.floor(Math.random() * height);
+            holeCol = Math.floor(Math.random() * width);
+        }
+        field[pathRow][pathCol] = pathCharacter;
+
+
+        //place holes in field when it's greater than 2x2
+        if (width * height > 4) {
+            const remainingCells = height * width - 4; //subtract the four initial cells in the 2x2 array
+            let holesToPlace = Math.floor(height * width * holePercentage) - 1; //one hole was already placed 
+
+            //while loop fills holes in random field character locations beyond initila 2x2 grid
+            //will place holes below maximum threshold of holes for entire grid is satisfied
+            while (holesToPlace > 0) {
+                const i = Math.floor(Math.random() * height);
+                const j = Math.floor(Math.random() * width);
+
+                if (field[i][j] === fieldCharacter && i>=2 && j >=2) {
+                    field[i][j] = hole;
+                    holesToPlace--;
+                };
+            };  
+        };
+
+    }
 };
 
 const newField = new Field([
