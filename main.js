@@ -58,7 +58,7 @@ class Field {
             if (x === 2 && y === 1) {
                 gameStatus = 'w'; 
                 this.print();
-                process.stdout.write('\nYou win!');
+                process.stdout.write('\nYou win!\n');
                 break;
             }
 
@@ -96,7 +96,7 @@ class Field {
         for (let i = 0; i < height; i++) {
             field.push([]);
             for (let j = 0; j < width; j++) {
-                field.push(fieldCharacter);
+                field[i].push(fieldCharacter);
             };
         };
 
@@ -140,6 +140,8 @@ class Field {
             };  
         };
 
+        return field;
+
     }
 };
 
@@ -153,4 +155,7 @@ const newField = new Field([
 newField.print();
 const move = prompt("Which way would you like to move?" + "\n(L = Left, R = Right, U = Up, D = Down): ").trim();
 newField.updateField(move);
+
+const otherField = new Field(Field.generateField(5, 5, 0.3));
+otherField.print();
 
